@@ -1,6 +1,8 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function NavLayout({
@@ -8,46 +10,40 @@ export default function NavLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [title, setTitle] = useState('홈');
   const router = useRouter();
+  const menus = [
+    { id: '1', link: 'home', title: '홈', src: '/home_icon.png' },
+    { id: '2', link: 'mail', title: '받은편지함', src: '/mail_icon.png' },
+    { id: '3', link: 'chat', title: '채팅', src: '/chat_icon.png' },
+  ];
 
-  const handleRoute = (e: React.FormEvent, menu: string) => {
-    e.preventDefault();
-    router.push(menu);
+  const handleRoute = (title: string, link: string) => {
+    setTitle(title);
+    router.push(`/${link}`);
   };
 
   return (
     <main className="flex">
       <nav className="w-[4vw] h-[100vh] border-r border-solid border-yellow-600">
         <ul className="h-full flex flex-col justify-center items-center gap-10">
-          <li onClick={(e) => handleRoute(e, '/home')}>
-            <Image
-              src="/home_icon.png"
-              alt="home icon"
-              width={20}
-              height={20}
-            />
-          </li>
-          <li onClick={(e) => handleRoute(e, '/mail')}>
-            <Image
-              src="/mail_icon.png"
-              alt="mail icon"
-              width={20}
-              height={20}
-            />
-          </li>
-          <li onClick={(e) => handleRoute(e, '/chat')}>
-            <Image
-              src="/chat_icon.png"
-              alt="chat icon"
-              width={20}
-              height={20}
-            />
-          </li>
+          {menus.map((menu, idx) => (
+            <li key={idx} onClick={() => handleRoute(menu.title, menu.link)}>
+              <Link href={`/${menu.link}`}>
+                <Image
+                  src={menu.src}
+                  alt={`${menu.link} icon`}
+                  width={20}
+                  height={20}
+                />
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
       <section>
         <header className="w-[96vw] px-4 py-5 flex justify-between items-center border-b border-solid border-yellow-600">
-          <h2 className="text-2xl font-bold">채팅</h2>
+          <h2 className="text-2xl font-bold">{title}</h2>
           <div className="relative">
             <Image
               src="/search_icon.png"
