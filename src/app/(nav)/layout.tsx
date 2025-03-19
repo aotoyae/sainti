@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function NavLayout({
   children,
@@ -11,15 +11,27 @@ export default function NavLayout({
   children: React.ReactNode;
 }>) {
   const [title, setTitle] = useState('홈');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+
   const menus = [
     { id: '1', link: 'home', title: '홈', src: '/home_icon.png' },
     { id: '2', link: 'mail', title: '받은편지함', src: '/mail_icon.png' },
     { id: '3', link: 'chat', title: '채팅', src: '/chat_icon.png' },
   ];
 
+  useEffect(() => {
+    const menu = menus.find((menu) => `/${menu.link}` === pathname);
+    if (menu) {
+      setTitle(menu.title);
+    }
+
+    setIsLoading(false);
+  }, [pathname]);
+
   const handleRoute = (title: string, link: string) => {
-    setTitle(title);
+    setIsLoading(true);
     router.push(`/${link}`);
   };
 
@@ -60,7 +72,13 @@ export default function NavLayout({
           </div>
           <h3>username</h3>
         </header>
-        {children}
+        {isLoading ? (
+          <div className="h-full flex justify-center items-center">
+            <h1 className="text-2xl font-black">로딩 중입니다.</h1>
+          </div>
+        ) : (
+          children
+        )}
       </section>
     </main>
   );
