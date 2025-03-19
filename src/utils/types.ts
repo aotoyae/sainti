@@ -1,6 +1,6 @@
-export interface Menu {
-  selectedMenu: string;
-  setSelectedMenu: (selectedMenu: string) => void;
+export interface Auth {
+  userId: string | null;
+  setUserId: (id: string) => void;
 }
 
 export interface Data {

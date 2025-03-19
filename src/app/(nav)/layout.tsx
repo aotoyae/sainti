@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import useAuthStore from '@/store/store';
 
 export default function NavLayout({
   children,
@@ -12,6 +13,7 @@ export default function NavLayout({
 }>) {
   const [title, setTitle] = useState('홈');
   const [isLoading, setIsLoading] = useState(false);
+  const userId = useAuthStore((state) => state.userId);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -30,7 +32,7 @@ export default function NavLayout({
     setIsLoading(false);
   }, [pathname]);
 
-  const handleRoute = (title: string, link: string) => {
+  const handleRoute = (link: string) => {
     setIsLoading(true);
     router.push(`/${link}`);
   };
@@ -40,7 +42,7 @@ export default function NavLayout({
       <nav className="w-[4vw] h-[100vh] border-r border-solid border-yellow-600">
         <ul className="h-full flex flex-col justify-center items-center gap-10">
           {menus.map((menu, idx) => (
-            <li key={idx} onClick={() => handleRoute(menu.title, menu.link)}>
+            <li key={idx} onClick={() => handleRoute(menu.link)}>
               <Link href={`/${menu.link}`}>
                 <Image
                   src={menu.src}
@@ -70,7 +72,7 @@ export default function NavLayout({
               className="w-[480px] p-1 pl-9 text-sm bg-gray-100 border border-solid border-gray-300 rounded-full"
             />
           </div>
-          <h3>username</h3>
+          <h3>{userId}</h3>
         </header>
         {isLoading ? (
           <div className="h-full flex justify-center items-center">

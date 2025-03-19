@@ -1,9 +1,9 @@
-import { Menu } from '@/utils/types';
+import { Auth } from '@/utils/types';
 import { create } from 'zustand';
 
-const useMenuStore = create<Menu>((set) => ({
-  selectedMenu: 'home',
-  setSelectedMenu: (menu) => set({ selectedMenu: menu }),
+const useAuthStore = create<Auth>((set) => ({
+  userId: null,
+  setUserId: (id) => set({ userId: id }),
 }));
 
-export default useMenuStore;
+export default useAuthStore;

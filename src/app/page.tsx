@@ -1,12 +1,17 @@
 'use client';
 
+import useAuthStore from '@/store/store';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Home() {
+  const [userId, setUserId] = useState('');
+  const setAuthUserId = useAuthStore((state) => state.setUserId);
   const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setAuthUserId(userId);
     router.push('/home');
   };
 
@@ -21,6 +26,8 @@ export default function Home() {
           <input
             id="id"
             type="text"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
             placeholder="아이디를 입력하세요"
             className="p-2 border border-solid border-gray-300 rounded-md"
           />
