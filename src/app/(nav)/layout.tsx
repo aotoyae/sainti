@@ -24,6 +24,12 @@ export default function NavLayout({
   ];
 
   useEffect(() => {
+    if (!userId) {
+      router.push('/');
+    }
+  }, [userId, router]);
+
+  useEffect(() => {
     const menu = menus.find((menu) => `/${menu.link}` === pathname);
     if (menu) {
       setTitle(menu.title);
