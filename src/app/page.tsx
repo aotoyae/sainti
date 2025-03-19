@@ -1,7 +1,9 @@
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col justify-center items-center gap-20">
-      <h1 className="text-2xl text-blue-900 font-bold">Login Page</h1>
+      <h1 className="text-2xl text-blue-900 font-bold drop-shadow-md">
+        Login Page
+      </h1>
       <form className="w-[400px] flex flex-col gap-6 text-sm">
         <div className="flex flex-col gap-1">
           <label htmlFor="">아이디</label>
