@@ -6,9 +6,9 @@ export default function NavLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <nav>
-        <ul>
+    <main className="flex">
+      <nav className="w-[4vw] h-[100vh] border-r border-solid border-yellow-600">
+        <ul className="h-full flex flex-col justify-center items-center gap-10">
           <li>
             <Image
               src="/home_icon.png"
@@ -35,27 +35,27 @@ export default function NavLayout({
           </li>
         </ul>
       </nav>
-      <main>
-        <section>
-          <h2>채팅</h2>
+      <section>
+        <header className="w-[96vw] px-4 py-5 flex justify-between items-center border-b border-solid border-yellow-600">
+          <h2 className="text-2xl font-bold">채팅</h2>
           <div className="relative">
             <Image
               src="/search_icon.png"
               alt="search icon"
-              width={20}
-              height={20}
-              className="absolute top-0 left-0"
+              width={15}
+              height={15}
+              className="absolute top-2 left-3"
             />
             <input
               type="text"
               placeholder="콘텐츠를 검색해 보세요"
-              className="border border-solid border-gray-300"
+              className="w-[480px] p-1 pl-9 text-sm bg-gray-100 border border-solid border-gray-300 rounded-full"
             />
           </div>
           <h3>username</h3>
-        </section>
+        </header>
         {children}
-      </main>
-    </>
+      </section>
+    </main>
   );
 }
