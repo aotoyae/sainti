@@ -1,4 +1,15 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+
 export default function Home() {
+  const router = useRouter();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push('/home');
+  };
+
   return (
     <main className="min-h-screen flex flex-col justify-center items-center gap-20">
       <h1 className="text-2xl text-blue-900 font-bold drop-shadow-md">
@@ -23,7 +34,10 @@ export default function Home() {
             className="p-2 border border-solid border-gray-300 rounded-md"
           />
         </div>
-        <button className="py-3 bg-blue-900 text-white rounded-full">
+        <button
+          onClick={handleLogin}
+          className="py-3 bg-blue-900 text-white rounded-full"
+        >
           Log in
         </button>
       </form>
